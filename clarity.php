@@ -83,7 +83,9 @@ function clarity_add_script_to_header(){
 			<script src="<?= plugins_url('clarity/clarity_lib/clarity.dev.js') ?>"></script>
 			<script type="text/javascript">
 				const e = {
-          url: "https://log.clarity.ms/js/<?= $p_id_option; ?>",
+					url: "https://log.clarity.ms/collect",                  // "https://log.clarity.ms/js/<?= $p_id_option; ?>",
+					uploadUrl:"https://log.clarity.ms/uploadv3",
+					projectId:"<?= $p_id_option; ?>",
 					uploadHeaders:{
 						"Content-Type":"application/json"
 					},
@@ -94,3 +96,9 @@ function clarity_add_script_to_header(){
 		<?php
 	}
 }
+
+
+// cript>(function(){var e={
+// 	uploadUrl:"https://log.clarity.ms/uploadv3",uploadHeaders:{"Content-Type":"application/json"}, 
+// instrument:!0,
+// projectId:"19ef31e8-e62b-41af-9aa3-b367d3c5460a"},t=document.getElementsByTagName("head")[0],n=document.createElement("script");n.src="https://clarity.microsoft.com/clarity-js",n.type="text/javascript",n.onload=function(){clarity.start(e)},n.onreadystatechange=function(){"complete"===this.readyState&&clarity.start(e)},t.appendChild(n)}());
