@@ -30,6 +30,19 @@ if(is_admin()){
   require_once plugin_dir_path(__FILE__).'/admin/settings_callbacks.php';
 }
 
+function clarity_plugin_settings_link( $links ) {
+	$url = get_admin_url() . 'options-general.php?page=clarity_settings';
+	$settings_link = '<a href="' . $url . '">' . __('Settings', 'textdomain') . '</a>';
+	array_unshift( $links, $settings_link );
+	return $links;
+}
+
+function clarity_after_setup_theme() {
+	 add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'clarity_plugin_settings_link');
+}
+add_action ('after_setup_theme', 'clarity_after_setup_theme');
+
+
 /**
 * Runs when Clarity Plugin is activated
 * @param void
@@ -44,11 +57,11 @@ function clarity_on_activation(){
 * @param void
 * @return void
 **/
-add_action('admin_enqueue_scripts', 'clarity_admin_scripts');
-function clarity_admin_scripts(){
-  wp_enqueue_script('clarity_lib',  plugins_url('clarity/clarity_lib/clarity.dev.js'), array());
 
-}
+// add_action('admin_enqueue_scripts', 'clarity_admin_scripts');
+// function clarity_admin_scripts(){
+//   wp_enqueue_script('clarity_lib',  plugins_url('clarity/clarity_lib/clarity.dev.js'), array());
+// }
 
 
 
@@ -76,14 +89,15 @@ function clarity_on_uninstallation(){
 add_action('wp_head', 'clarity_add_script_to_header');
 function clarity_add_script_to_header(){
 
-	if(!is_user_logged_in()){
+	// if(!is_user_logged_in())
+	// {
     $p_id_option = get_option('clarity_project_id');
     // wp_die($p_id_option);
 		?>
-			<script src="<?= plugins_url('clarity/clarity_lib/clarity.dev.js') ?>"></script>
+			<script src="<?= 'https://log.clarity.ms/js/'. $p_id_option ?>"></script>
 			<script type="text/javascript">
-				const e = {
-					url: "https://log.clarity.ms/collect",                  // "https://log.clarity.ms/js/<?= $p_id_option; ?>",
+				const e = { //https://log.clarity.ms/js/1
+					url: "https://log.clarity.ms/collect",                  // "https://log.clarity.ms/js/<?= $p_id_option; ?>", 'clarity/clarity_lib/clarity.dev.js'
 					uploadUrl:"https://log.clarity.ms/uploadv3",
 					projectId:"<?= $p_id_option; ?>",
 					uploadHeaders:{
@@ -94,11 +108,5 @@ function clarity_add_script_to_header(){
 				clarity.start(e);
 			</script>
 		<?php
-	}
+	// }
 }
-
-
-// cript>(function(){var e={
-// 	uploadUrl:"https://log.clarity.ms/uploadv3",uploadHeaders:{"Content-Type":"application/json"}, 
-// instrument:!0,
-// projectId:"19ef31e8-e62b-41af-9aa3-b367d3c5460a"},t=document.getElementsByTagName("head")[0],n=document.createElement("script");n.src="https://clarity.microsoft.com/clarity-js",n.type="text/javascript",n.onload=function(){clarity.start(e)},n.onreadystatechange=function(){"complete"===this.readyState&&clarity.start(e)},t.appendChild(n)}());
