@@ -23,5 +23,5 @@ function clarity_register_settings(){
   register_setting('clarity_settings_fields', 'clarity_project_id');
   
   add_settings_section('clarity_section_project_id','Welcome to clarity!','clarity_section_project_id_callback','clarity_settings');
-  add_settings_field('clarity_settings_field_project_id','Project ID:','clarity_settings_field_project_id_callback','clarity_settings','clarity_section_project_id');
+  add_settings_field('clarity_settings_field_project_id','Project Id:','clarity_settings_field_project_id_callback','clarity_settings','clarity_section_project_id');
 }

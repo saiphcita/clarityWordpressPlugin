@@ -88,25 +88,26 @@ function clarity_on_uninstallation(){
 **/
 add_action('wp_head', 'clarity_add_script_to_header');
 function clarity_add_script_to_header(){
-
-	// if(!is_user_logged_in())
-	// {
     $p_id_option = get_option('clarity_project_id');
-    // wp_die($p_id_option);
 		?>
-			<script src="<?= 'https://log.clarity.ms/js/'. $p_id_option ?>"></script>
-			<script type="text/javascript">
-				const e = { //https://log.clarity.ms/js/1
-					url: "https://log.clarity.ms/collect",                  // "https://log.clarity.ms/js/<?= $p_id_option; ?>", 'clarity/clarity_lib/clarity.dev.js'
-					uploadUrl:"https://log.clarity.ms/uploadv3",
-					projectId:"<?= $p_id_option; ?>",
-					uploadHeaders:{
-						"Content-Type":"application/json"
-					},
-					instrument: !0,
+			<script type="text/javascript" >
+				function initClarity(){
+					const e = {
+						url: "https://log.clarity.ms/collect",
+						uploadUrl:"https://log.clarity.ms/uploadv3",
+						projectId:"<?= $p_id_option; ?>",
+						uploadHeaders:{
+							"Content-Type":"application/json"
+						},
+						instrument: !0,
+					}
+					clarity.start(e);
 				}
-				clarity.start(e);
+				var script = document.createElement('script');
+				script.src = "<?= 'https://log.clarity.ms/js/'. $p_id_option ?>"
+				script.onload = initClarity;
+				document.head.appendChild(script);
 			</script>
+
 		<?php
-	// }
 }

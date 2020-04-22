@@ -41,7 +41,7 @@ function clarity_section_project_id_callback(){
     <h3>Instructions</h3>
       <ol>
         <li>Click on the following link to start a <a href="https://clarity.microsoft.com/projects?snpf=1">Clarity project.</a></li>
-        <li>Copy and paste the Proyect ID.</li>
+        <li>Copy and paste the Proyect Id.</li>
         <?php
         ?>
       </ol>
